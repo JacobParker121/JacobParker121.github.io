@@ -158,67 +158,77 @@
         }
 
        /* JavaScript for handling the dropdowns */
-const serviceCards = document.querySelectorAll('.service-card');
+       const serviceCards = document.querySelectorAll('.service-card');
 
-serviceCards.forEach(card => {
-    const details = card.querySelector('.service-details');
-    const toggle = card.querySelector('.service-toggle');
-
-    // Only attach click handler on mobile
-    if (window.innerWidth <= 768) {
-        toggle.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            const isActive = card.classList.contains('active');
-            
-            // Close all other cards
-            serviceCards.forEach(otherCard => {
-                if (otherCard !== card && otherCard.classList.contains('active')) {
-                    const otherDetails = otherCard.querySelector('.service-details');
-                    otherCard.classList.remove('active');
-                    otherDetails.classList.add('animating-up');
-                    otherDetails.addEventListener('animationend', () => {
-                        otherDetails.classList.remove('animating-up');
-                        otherDetails.style.display = 'none';
-                    }, { once: true });
-                }
-            });
-
-            // Toggle current card
-            if (isActive) {
-                details.classList.add('animating-up');
-                details.addEventListener('animationend', () => {
-                    details.classList.remove('animating-up');
-                    details.style.display = 'none';
-                    card.classList.remove('active');
-                }, { once: true });
-            } else {
-                card.classList.add('active');
-                details.style.display = 'block';
-                details.classList.add('animating-down');
-                details.addEventListener('animationend', () => {
-                    details.classList.remove('animating-down');
-                }, { once: true });
-            }
-        });
-    }
-});
-
-// Update HTML structure for service cards
-document.querySelectorAll('.service-card').forEach(card => {
-    const title = card.querySelector('h3').textContent;
-    const toggle = document.createElement('button');
-    toggle.className = 'service-toggle';
-    toggle.textContent = 'Learn More';
-    toggle.setAttribute('aria-expanded', 'false');
-    toggle.setAttribute('aria-controls', `details-${title.toLowerCase().replace(/\s+/g, '-')}`);
-    
-    const details = card.querySelector('.service-details');
-    details.id = `details-${title.toLowerCase().replace(/\s+/g, '-')}`;
-    
-    card.appendChild(toggle);
-});
+       serviceCards.forEach(card => {
+           const details = card.querySelector('.service-details');
+           const toggle = card.querySelector('.service-toggle');
+       
+           // Only attach click handler on mobile
+           if (window.innerWidth <= 768) {
+               toggle.addEventListener('click', (e) => {
+                   e.preventDefault();
+                   e.stopPropagation();
+                   
+                   const isActive = card.classList.contains('active');
+                   
+                   // Close all other cards
+                   serviceCards.forEach(otherCard => {
+                       if (otherCard !== card && otherCard.classList.contains('active')) {
+                           const otherDetails = otherCard.querySelector('.service-details');
+                           otherCard.classList.remove('active');
+                           otherDetails.classList.add('animating-up');
+                           otherDetails.addEventListener('animationend', () => {
+                               otherDetails.classList.remove('animating-up');
+                               otherDetails.style.display = 'none';
+                           }, { once: true });
+                       }
+                   });
+       
+                   // Toggle current card
+                   if (isActive) {
+                       details.classList.add('animating-up');
+                       details.addEventListener('animationend', () => {
+                           details.classList.remove('animating-up');
+                           details.style.display = 'none';
+                           card.classList.remove('active');
+                       }, { once: true });
+                   } else {
+                       // Position the dropdown
+                       const cardRect = card.getBoundingClientRect();
+                       details.style.top = `${cardRect.bottom}px`;
+                       details.style.width = `${cardRect.width}px`;
+                       
+                       card.classList.add('active');
+                       details.style.display = 'block';
+                       details.classList.add('animating-down');
+                       details.addEventListener('animationend', () => {
+                           details.classList.remove('animating-down');
+                       }, { once: true });
+                   }
+               });
+           }
+       });
+       
+       // Update positions on scroll and resize
+       window.addEventListener('scroll', () => {
+           const activeCard = document.querySelector('.service-card.active');
+           if (activeCard && window.innerWidth <= 768) {
+               const details = activeCard.querySelector('.service-details');
+               const cardRect = activeCard.getBoundingClientRect();
+               details.style.top = `${cardRect.bottom}px`;
+           }
+       });
+       
+       window.addEventListener('resize', () => {
+           const activeCard = document.querySelector('.service-card.active');
+           if (activeCard && window.innerWidth <= 768) {
+               const details = activeCard.querySelector('.service-details');
+               const cardRect = activeCard.getBoundingClientRect();
+               details.style.width = `${cardRect.width}px`;
+               details.style.top = `${cardRect.bottom}px`;
+           }
+       });
     </script>
 </body>
 </html>

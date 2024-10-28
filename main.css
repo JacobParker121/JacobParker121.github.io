@@ -85,6 +85,7 @@ nav {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
+    position: relative;
 }
 
 .service-card {
@@ -95,19 +96,16 @@ nav {
     padding: 2rem;
     border-radius: 10px;
     text-align: center;
+    z-index: 1;
+}
+
+.service-card.active {
+    z-index: 2;
 }
 
 .service-card h3 {
     color: #2c3e50;
     margin-bottom: 1rem;
-}
-
-.service-details {
-    background-color: white;
-    border-radius: 0 0 10px 10px;
-    padding: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 10;
 }
 
 /* Contact Form Styles */
@@ -215,7 +213,7 @@ footer {
     margin-top: 4rem;
 }
 
-/* Desktop Dropdown Styles */
+/* Desktop Styles */
 @media screen and (min-width: 769px) {
     .service-card:hover {
         transform: translateY(-5px);
@@ -227,6 +225,11 @@ footer {
         top: 100%;
         left: 0;
         right: 0;
+        background-color: white;
+        border-radius: 0 0 10px 10px;
+        padding: 1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 3;
     }
 
     .service-card:hover .service-details {
@@ -298,22 +301,24 @@ footer {
     }
 
     .service-card {
-        padding: 1.5rem;
-        transition: none;
         margin-bottom: 1rem;
-    }
-
-    .service-card:hover {
-        transform: none;
+        transition: none;
     }
 
     .service-details {
         display: none;
-        position: static;
-        box-shadow: none;
-        padding: 1rem 0 0 0;
-        margin-top: 1rem;
-        border-top: 1px solid #eee;
+        position: absolute;
+        left: 0;
+        right: 0;
+        background-color: white;
+        padding: 1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 0 0 10px 10px;
+        z-index: 3;
+    }
+
+    .service-card.active .service-details {
+        display: block;
     }
 
     .service-toggle {
@@ -386,22 +391,22 @@ footer {
 @keyframes slideDown {
     from {
         opacity: 0;
-        max-height: 0;
+        transform: translateY(-10px);
     }
     to {
         opacity: 1;
-        max-height: 500px;
+        transform: translateY(0);
     }
 }
 
 @keyframes slideUp {
     from {
         opacity: 1;
-        max-height: 500px;
+        transform: translateY(0);
     }
     to {
         opacity: 0;
-        max-height: 0;
+        transform: translateY(-10px);
     }
 }
 
@@ -413,6 +418,34 @@ footer {
 .service-details.animating-up {
     display: block;
     animation: slideUp 0.3s ease-out forwards;
+}
+
+/* Service Details Content Styling */
+.service-details ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.service-details li {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.service-details li:last-child {
+    border-bottom: none;
+}
+
+.service-details h4 {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.service-details p {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.4;
 }
 
 /* Improve touch targets */
