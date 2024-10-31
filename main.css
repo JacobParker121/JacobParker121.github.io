@@ -3,7 +3,9 @@
     padding: 0;
     box-sizing: border-box;
     font-family: Arial, sans-serif;
+    
 }
+
 
 header {
     background-color: #2c3e50;
@@ -20,8 +22,20 @@ nav {
 }
 
 .logo {
+    display: flex;
+    align-items: center;
     font-size: 1.5rem;
     font-weight: bold;
+    color: white;
+}
+
+
+
+.logo-main img {
+    width: 20rem;
+    hight: 20rem;
+    display: inline-block;
+    
 }
 
 .nav-links {
@@ -43,9 +57,9 @@ nav {
 }
 
 .hero {
-    background-color: #3498db;
+    background-color: #0A0C19;
     color: white;
-    padding: 4rem 2rem;
+    padding: 2rem 2rem;
     text-align: center;
 }
 
@@ -60,7 +74,7 @@ nav {
 }
 
 .cta-button {
-    background-color: #e74c3c;
+    background-color: #E67E22;
     color: white;
     padding: 1rem 2rem;
     border: none;
@@ -114,7 +128,7 @@ nav {
     top: 100%;
     left: 0;
     right: 0;
-    background-color: white;
+    background-color: ECE5CD;
     border-radius: 0 0 10px 10px;
     padding: 1rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -206,7 +220,7 @@ nav {
 }
 
 .submit-button {
-    background-color: #3498db;
+    background-color: #E67E22;
     color: white;
     padding: 1rem;
     border: none;
